@@ -1,0 +1,38 @@
+{
+    "name": "lotgd/village",
+    "description": "A basic village.",
+    "type": "lotgd-module",
+    "license": "AGPL-3.0",
+    "authors": [
+        {
+            "name": "Basilius Sauter",
+            "email": "basilius.sauter@gmail.com"
+        },
+        {
+            "name": "Austen McDonald",
+            "email": "austen.mcdonald@gmail.com"
+        }
+    ],
+    "autoload": {
+        "psr-4": {
+            "LotGD\\Module\\Village\\": "src/"
+        }
+    },
+    "repositories": [
+        {
+            "type": "vcs",
+            "url": "https://github.com/lotgd/core.git"
+        },
+        {
+            "type": "composer",
+            "url": "http://code.lot.gd"
+        }
+    ],
+    "require": {
+        "lotgd/core": "dev-master"
+    },
+
+    "require-dev": {
+        "phpunit/dbunit": "*"
+    }
+}
