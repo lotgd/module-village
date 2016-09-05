@@ -51,7 +51,10 @@ class Module implements ModuleInterface {
         return Scene::create([
             'template' => self::VillageScene,
             'title' => 'Village Square',
-            'description' => "This is the village square."
+            'description' => "The village square hustles and bustles. No one really notices "
+                ."that you're are standing there. You see various shops and businesses along "
+                ."main street. There is a curious looking rock to one side. On every side the "
+                ."village is surrounded by deep dark forest."
         ]);
     }
 
