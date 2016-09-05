@@ -1,5 +1,5 @@
 {
-    "name": "lotgd/village",
+    "name": "lotgd/module-village",
     "description": "A basic village.",
     "type": "lotgd-module",
     "license": "AGPL-3.0",

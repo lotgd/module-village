@@ -14,7 +14,7 @@ use LotGD\Module\Village\Module;
 
 class ModuleTest extends ModelTestCase
 {
-    const Library = 'lotgd/village';
+    const Library = 'lotgd/module-village';
 
     private $g;
     private $moduleModel;
