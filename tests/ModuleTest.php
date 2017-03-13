@@ -42,10 +42,16 @@ class ModuleTest extends ModelTestCase
         $this->moduleModel = new ModuleModel(self::Library);
         $this->moduleModel->save($this->getEntityManager());
         Module::onRegister($this->g, $this->moduleModel);
+
+        $this->g->getEntityManager()->flush();
+        $this->g->getEntityManager()->clear();
     }
 
     public function tearDown()
     {
+        $this->g->getEntityManager()->flush();
+        $this->g->getEntityManager()->clear();
+
         parent::tearDown();
 
         Module::onUnregister($this->g, $this->moduleModel);

@@ -4,6 +4,7 @@ declare(strict_types=1);
 namespace LotGD\Module\Village;
 
 use LotGD\Core\Game;
+use LotGD\Core\Models\SceneConnectionGroup;
 use LotGD\Core\Module as ModuleInterface;
 use LotGD\Core\Models\Module as ModuleModel;
 use LotGD\Core\Models\Scene;
@@ -12,6 +13,11 @@ class Module implements ModuleInterface {
     const Module = "lotgd/module-village";
     const VillageScene = "lotgd/module-village/village";
     const VillageSceneArrayProperty = "lotgd/module-village/scenes";
+    const Groups = [
+        "lotgd/module-village/outside",
+        "lotgd/module-village/residential",
+        "lotgd/module-village/marketsquare"
+    ];
 
     public static function handleEvent(Game $g, string $event, array &$context)
     {
@@ -48,7 +54,7 @@ class Module implements ModuleInterface {
 
     private static function getBaseScene(): Scene
     {
-        return Scene::create([
+        $scene = Scene::create([
             'template' => self::VillageScene,
             'title' => 'Village Square',
             'description' => "The village square hustles and bustles. No one really notices "
@@ -56,34 +62,41 @@ class Module implements ModuleInterface {
                 ."main street. There is a curious looking rock to one side. On every side the "
                 ."village is surrounded by deep dark forest."
         ]);
-    }
 
-    private static function storeSceneId(ModuleModel $module, int $id)
-    {
-        $module->setProperty(self::VillageSceneArrayProperty, $id);
+        $scene->addConnectionGroup(new SceneConnectionGroup(self::Groups[0], "Outside"));
+        $scene->addConnectionGroup(new SceneConnectionGroup(self::Groups[1], "Residential District"));
+        $scene->addConnectionGroup(new SceneConnectionGroup(self::Groups[2], "The Marketsquare"));
+
+        return $scene;
     }
 
     public static function onRegister(Game $g, ModuleModel $module)
     {
-        // Add a single village scene which can be used as an anchor.
-        $g->getLogger()->addNotice(sprintf(
-            "%s: Adds a basic village scene.",
-            self::Module
-        ));
+        $sceneId = $module->getProperty(self::VillageSceneArrayProperty);
 
-        $village = self::getBaseScene();
-        $village->save($g->getEntityManager());
+        if ($sceneId === null) {
+            // Add a single village scene which can be used as an anchor.
+            $g->getLogger()->addNotice(sprintf(
+                "%s: Adds a basic village scene.",
+                self::Module
+            ));
 
-        self::storeSceneId($module, $village->getId());
+            $village = self::getBaseScene();
+            $village->save($g->getEntityManager());
+
+            $module->setProperty(self::VillageSceneArrayProperty, $village->getId());
+        }
     }
 
     public static function onUnregister(Game $g, ModuleModel $module)
     {
         $sceneId = $module->getProperty(self::VillageSceneArrayProperty);
+
         if ($sceneId !== null) {
+            /** @var Scene $scene */
             $scene = $g->getEntityManager()->getRepository(Scene::class)
                 ->find($sceneId);
-            $g->getEntityManager()->remove($scene);
+            $scene->delete($g->getEntityManager());
             $module->setProperty(self::VillageSceneArrayProperty, null);
         }
     }

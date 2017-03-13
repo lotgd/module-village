@@ -33,7 +33,7 @@
     },
 
     "require-dev": {
-        "phpunit/dbunit": "*"
+        "phpunit/dbunit": "^2.0"
     },
 
     "config": {
