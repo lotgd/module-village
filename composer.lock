@@ -4,7 +4,7 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#composer-lock-the-lock-file",
         "This file is @generated automatically"
     ],
-    "content-hash": "3630512630758a04e526140daa68b908",
+    "content-hash": "ffc9f05078d47ac0006f0e3534f912ce",
     "packages": [
         {
             "name": "behat/transliterator",
@@ -1088,7 +1088,7 @@
         },
         {
             "name": "lotgd/core",
-            "version": "dev-master",
+            "version": "v0.2.0-alpha",
             "source": {
                 "type": "git",
                 "url": "https://github.com/lotgd/core.git",
@@ -1130,10 +1130,10 @@
             ],
             "description": "Core functionality for Legend of the Green Dragon, a text-based RPG game.",
             "support": {
-                "source": "https://github.com/lotgd/core/tree/master",
+                "source": "https://github.com/lotgd/core/tree/revert-commit",
                 "issues": "https://github.com/lotgd/core/issues"
             },
-            "time": "2017-03-13 13:13:50"
+            "time": "2017-03-13T13:13:50+00:00"
         },
         {
             "name": "monolog/monolog",
@@ -3047,7 +3047,7 @@
     "aliases": [],
     "minimum-stability": "stable",
     "stability-flags": {
-        "lotgd/core": 20
+        "lotgd/core": 15
     },
     "prefer-stable": false,
     "prefer-lowest": false,

@@ -20,16 +20,12 @@
     },
     "repositories": [
         {
-            "type": "vcs",
-            "url": "https://github.com/lotgd/core.git"
-        },
-        {
             "type": "composer",
             "url": "http://code.lot.gd"
         }
     ],
     "require": {
-        "lotgd/core": "dev-master"
+        "lotgd/core": "^0.2-alpha"
     },
 
     "require-dev": {
