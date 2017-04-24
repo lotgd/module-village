@@ -3,6 +3,7 @@ declare(strict_types=1);
 
 namespace LotGD\Module\Village;
 
+use LotGD\Core\Events\EventContext;
 use LotGD\Core\Game;
 use LotGD\Core\Models\SceneConnectionGroup;
 use LotGD\Core\Module as ModuleInterface;
@@ -19,37 +20,42 @@ class Module implements ModuleInterface {
         "lotgd/module-village/marketsquare"
     ];
 
-    public static function handleEvent(Game $g, string $event, array &$context)
+    public static function handleEvent(Game $g, EventContext $context): EventContext
     {
-        switch ($event) {
-            case 'h/lotgd/core/default-scene':
-                $character = $context["character"];
-
-                if (is_null($context["scene"])) {
-                    // search village scene
-                    // ToDo: Maybe use a dynamic setting and let the default scene configurable by daenerys?
-                    $villageScene = $g->getEntityManager()->getRepository(Scene::class)
-                        ->findOneBy(["template" => self::VillageScene]);
-
-                    if ($villageScene !== null) {
-                        $context["scene"] = $villageScene;
-                    }
-                    else {
-                        $g->getLogger()->addNotice(sprintf(
-                            "%s: Tried to find default scene, but none with %s as a template has been found",
-                            self::Module,
-                            self::VillageScene
-                        ));
-                    }
-                }
-                else {
-                    $g->getLogger()->addNotice(sprintf(
-                        "%s: Called for hook /h/lotgd/core/default-scene, but scene in context is not null.",
-                        self::Module
-                    ));
-                }
-                break;
+        if ($context->getEvent() === "h/lotgd/core/default-scene") {
+            $context = self::handleDefaultScene($g, $context);
         }
+
+        return $context;
+    }
+
+    private static function handleDefaultScene(Game $g, EventContext $context): EventContext
+    {
+        if ($context->getDataField("scene") === null) {
+            // search village scene
+            // ToDo: Maybe use a dynamic setting and let the default scene configurable by daenerys?
+            $villageScene = $g->getEntityManager()->getRepository(Scene::class)
+                ->findOneBy(["template" => self::VillageScene]);
+
+            if ($villageScene !== null) {
+                $context->setDataField("scene", $villageScene);
+            }
+            else {
+                $g->getLogger()->addNotice(sprintf(
+                    "%s: Tried to find default scene, but none with %s as a template has been found",
+                    self::Module,
+                    self::VillageScene
+                ));
+            }
+        }
+        else {
+            $g->getLogger()->addNotice(sprintf(
+                "%s: Called for hook /h/lotgd/core/default-scene, but scene in context is not null.",
+                self::Module
+            ));
+        }
+
+        return $context;
     }
 
     private static function getBaseScene(): Scene

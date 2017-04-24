@@ -86,21 +86,30 @@ class ModuleTest extends ModelTestCase
     public function testHandleUnknownEvent()
     {
         // Always good to test a non-existing event just to make sure nothing happens :).
-        $context = [];
-        Module::handleEvent($this->g, 'e/lotgd/tests/unknown-event', $context);
+        $context = new \LotGD\Core\Events\EventContext(
+            "e/lotgd/tests/unknown-event",
+            "none",
+            \LotGD\Core\Events\EventContextData::create([])
+        );
+
+        Module::handleEvent($this->g, $context);
     }
 
     public function testHandleDefaultEvent()
     {
         $character = $this->g->getEntityManager()->getRepository(Character::class)->find(1);
-        $context = [
-            "character" => $character,
-            "scene" => null
-        ];
 
-        Module::handleEvent($this->g, 'h/lotgd/core/default-scene', $context);
+        $context = new \LotGD\Core\Events\EventContext(
+            "h/lotgd/core/default-scene",
+            "h/lotgd/core/default-scene",
+            \LotGD\Core\Events\NewViewpointData::create([
+                "character" => $character,
+                "scene" => null
+            ])
+        );
+        $context = Module::handleEvent($this->g, $context);
 
-        $this->assertSame($character, $context["character"]);
-        $this->assertNotNull($context["scene"]);
+        $this->assertSame($character, $context->getDataField("character"));
+        $this->assertNotNull($context->getDataField("scene"));
     }
 }
