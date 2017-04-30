@@ -29,7 +29,7 @@
         }
     ],
     "require": {
-        "lotgd/core": "dev-master"
+        "lotgd/core": "^0.3.0-alpha"
     },
 
     "require-dev": {
