@@ -25,7 +25,7 @@
         }
     ],
     "require": {
-        "lotgd/core": "^0.3.0-alpha"
+        "lotgd/core": "^0.4.0-alpha"
     },
 
     "require-dev": {

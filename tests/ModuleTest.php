@@ -16,7 +16,7 @@ class ModuleTest extends ModelTestCase
 {
     const Library = 'lotgd/module-village';
 
-    private $g;
+    public $g;
     private $moduleModel;
 
     protected function getDataSet(): \PHPUnit_Extensions_Database_DataSet_YamlDataSet
