@@ -97,7 +97,7 @@ class ModuleTest extends ModelTestCase
 
     public function testHandleDefaultEvent()
     {
-        $character = $this->g->getEntityManager()->getRepository(Character::class)->find(1);
+        $character = $this->g->getEntityManager()->getRepository(Character::class)->find("10000000-0000-0000-0000-000000000001");
 
         $context = new \LotGD\Core\Events\EventContext(
             "h/lotgd/core/default-scene",
