@@ -31,6 +31,7 @@ class ModuleTest extends ModelTestCase
         // Make an empty logger for these tests. Feel free to change this
         // to place log messages somewhere you can easily find them.
         $logger  = new Logger('test');
+        #$logger->pushHandler(new \Monolog\Handler\StreamHandler('php://stdout'));
         $logger->pushHandler(new NullHandler());
 
         // Create a Game object for use in these tests.
@@ -144,6 +145,9 @@ class ModuleTest extends ModelTestCase
                 "scene" => null,
             ])
         );
+
+        $this->assertNull($context->getDataField("scene"));
+
         $context = Module::handleEvent($this->g, $context);
 
         $this->assertSame($character, $context->getDataField("character"));

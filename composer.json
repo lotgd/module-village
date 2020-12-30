@@ -3,6 +3,7 @@
     "description": "A basic village.",
     "type": "lotgd-module",
     "license": "AGPL-3.0",
+    "version": "v0.6.0",
     "authors": [
         {
             "name": "Basilius Sauter",

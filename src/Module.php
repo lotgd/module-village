@@ -45,12 +45,19 @@ class Module implements ModuleInterface {
             if ($villageScene !== null) {
                 // Set scene on EventContext to the found village scene.
                 $context->setDataField("scene", $villageScene);
+
+                $g->getLogger()->notice(sprintf(
+                    "%s: Has found a default scene: %s, with id=%s",
+                    self::Module,
+                    $villageScene->getTitle(),
+                    $villageScene->getId(),
+                ));
             }
             else {
                 $g->getLogger()->notice(sprintf(
                     "%s: Tried to find default scene, but none with %s as a template has been found",
                     self::Module,
-                    self::VillageScene
+                    VillageScene::class
                 ));
             }
         }
