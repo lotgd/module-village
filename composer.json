@@ -19,6 +19,7 @@
         }
     },
     "repositories": [
+        {"type": "path", "url": "../core"},
         {
             "type": "composer",
             "url": "https://raw.githubusercontent.com/lotgd/packages/master/build/packages.json"
@@ -29,9 +30,9 @@
     },
 
     "require-dev": {
-        "phpunit/dbunit": "^2.0"
+        "phpunit/phpunit": "*",
+        "symfony/yaml": "*"
     },
-
     "config": {
         "secure-http": false
     },

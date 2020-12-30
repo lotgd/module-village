@@ -12,13 +12,4 @@ scenes:
         id: "20000000-0000-0000-0000-000000000001"
         title: "Village"
         description: "You arrive in a village."
-        template: 'lotgd/test/village'
-modules:
-    -
-        library: 'lotgd/test-module'
-        createdAt: "2016-08-22 11:00:00"
-module_properties:
-    -
-        owner: 'lotgd/test-module'
-        propertyName: "lotgd/test-module/property"
-        propertyValue: 's:36:"20000000-0000-0000-0000-000000000001";'
+        template: null
