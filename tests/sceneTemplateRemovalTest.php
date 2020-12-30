@@ -10,7 +10,7 @@ use LotGD\Module\Village\SceneTemplates\VillageScene;
 
 class sceneTemplateRemovalTest extends ModuleTest
 {
-    protected function getDataSet(): array
+    public function getDataSet(): array
     {
         return Yaml::parseFile(implode(DIRECTORY_SEPARATOR, [__DIR__, 'datasets', 'sceneTemplateRemoval.yml']));
     }

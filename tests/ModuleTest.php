@@ -19,7 +19,7 @@ class ModuleTest extends ModelTestCase
     public $g;
     protected $moduleModel;
 
-    protected function getDataSet(): array
+    public function getDataSet(): array
     {
         return Yaml::parseFile(implode(DIRECTORY_SEPARATOR, [__DIR__, 'datasets', 'module.yml']));
     }
@@ -27,15 +27,6 @@ class ModuleTest extends ModelTestCase
     public function setUp(): void
     {
         parent::setUp();
-
-        // Make an empty logger for these tests. Feel free to change this
-        // to place log messages somewhere you can easily find them.
-        $logger  = new Logger('test');
-        #$logger->pushHandler(new \Monolog\Handler\StreamHandler('php://stdout'));
-        $logger->pushHandler(new NullHandler());
-
-        // Create a Game object for use in these tests.
-        $this->g = new Game(new Configuration(getenv('LOTGD_TESTS_CONFIG_PATH')), $logger, $this->getEntityManager(), implode(DIRECTORY_SEPARATOR, [__DIR__, '..']));
 
         // Register and unregister before/after each test, since
         // handleEvent() calls may expect the module be registered (for example,
@@ -63,41 +54,6 @@ class ModuleTest extends ModelTestCase
         $this->getEntityManager()->clear();
 
         parent::tearDown();
-    }
-
-    public function assertDataWasKeptIntact(?array $restrictToTables = null): void
-    {
-        // Assert that databases are the same before and after.
-        // TODO for module author: update list of tables below to include the
-        // tables you modify during registration/unregistration.
-        $dataSetBefore = $this->getDataSet();
-        /** @var \PDO $pdo */
-        $pdo = $this->getConnection()[0];
-
-        foreach ($dataSetBefore as $table => $rowsBefore) {
-            // Ignore table if $restrictToTables is an array and the table is not on the list.
-            if (is_array($restrictToTables) and empty($restrictToTables[$table])) {
-                continue;
-            }
-
-            $query = $pdo->query("SELECT * FROM `$table`");
-            $rowsAfter = $query->fetchAll(PDO::FETCH_ASSOC);
-
-            // Assert equal row counts
-            $this->assertCount(count($rowsBefore), $rowsAfter,
-                "Database assertion: Table <$table> does not match the expected number of rows. 
-                Expected was <".count($rowsBefore).">, but found was <".count($rowsAfter).">"
-            );
-
-            foreach ($rowsBefore as $key => $rowBefore) {
-                foreach ($rowBefore as $field => $value) {
-                    $this->assertEquals($value, $rowsAfter[$key][$field],
-                        "Database assertion: In table <$table>, field <$field> does not match expected value <$value>,
-                        is <{$rowsAfter[$key][$field]}> instead.",
-                    );
-                }
-            }
-        }
     }
 
     // TODO for LotGD staff: this test assumes the schema in their yaml file
