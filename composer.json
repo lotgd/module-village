@@ -20,14 +20,13 @@
         }
     },
     "repositories": [
-        {"type": "path", "url": "../core"},
         {
             "type": "composer",
             "url": "https://raw.githubusercontent.com/lotgd/packages/master/build/packages.json"
         }
     ],
     "require": {
-        "lotgd/core": ">=0.5.0-alpha"
+        "lotgd/core": "dev-master"
     },
 
     "require-dev": {

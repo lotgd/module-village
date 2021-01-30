@@ -69,7 +69,7 @@ class ModuleTest extends ModelTestCase
         // flush changes
         $this->getEntityManager()->flush();
 
-        $this->assertDataWasKeptIntact();
+        $this->assertDataWasKeptIntact($this->getDataSet(), $this->getConnection()[0]);
 
         // Since tearDown() contains an onUnregister() call, this also tests
         // double-unregistering, which should be properly supported by modules.
