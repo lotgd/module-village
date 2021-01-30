@@ -6,11 +6,9 @@ namespace LotGD\Module\Village;
 use Doctrine\ORM\EntityManagerInterface;
 use LotGD\Core\Events\EventContext;
 use LotGD\Core\Game;
-use LotGD\Core\Models\SceneConnectionGroup;
 use LotGD\Core\Module as ModuleInterface;
 use LotGD\Core\Models\Module as ModuleModel;
 use LotGD\Core\Models\Scene;
-use LotGD\Core\Models\SceneTemplate;
 use LotGD\Module\Village\SceneTemplates\VillageScene;
 
 const MODULE = "lotgd/module-village";
@@ -19,11 +17,6 @@ class Module implements ModuleInterface {
     const Module = MODULE;
     const VillageScene = MODULE . "/village";
     const AutomaticallyRegisteredScenes = MODULE . "/scenes";
-    const Groups = [
-        "lotgd/module-village/outside",
-        "lotgd/module-village/residential",
-        "lotgd/module-village/marketsquare"
-    ];
 
     public static function handleEvent(Game $g, EventContext $context): EventContext
     {
@@ -71,24 +64,6 @@ class Module implements ModuleInterface {
         return $context;
     }
 
-    private static function getBaseScene(): Scene
-    {
-        $scene = Scene::create([
-            'template' => new SceneTemplate(VillageScene::class, MODULE),
-            'title' => 'Village Square',
-            'description' => "The village square hustles and bustles. No one really notices "
-                ."that you're are standing there. You see various shops and businesses along "
-                ."main street. There is a curious looking rock to one side. On every side the "
-                ."village is surrounded by deep dark forest."
-        ]);
-
-        $scene->addConnectionGroup(new SceneConnectionGroup(self::Groups[0], "Outside"));
-        $scene->addConnectionGroup(new SceneConnectionGroup(self::Groups[1], "Residential District"));
-        $scene->addConnectionGroup(new SceneConnectionGroup(self::Groups[2], "The Marketsquare"));
-
-        return $scene;
-    }
-
     public static function onRegister(Game $g, ModuleModel $module)
     {
         /** @var EntityManagerInterface $em */
@@ -102,7 +77,7 @@ class Module implements ModuleInterface {
 
         // Register scene
 
-        $village = self::getBaseScene();
+        $village = VillageScene::getScaffold();
 
         $em->persist($village);
         $em->persist($village->getTemplate());

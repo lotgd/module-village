@@ -2,8 +2,7 @@
     "name": "lotgd/module-village",
     "description": "A basic village.",
     "type": "lotgd-module",
-    "license": "AGPL-3.0",
-    "version": "v0.6.0",
+    "license": "AGPL-3.0-or-later",
     "authors": [
         {
             "name": "Basilius Sauter",
@@ -26,7 +25,7 @@
         }
     ],
     "require": {
-        "lotgd/core": "dev-master"
+        "lotgd/core": "^0.6.0-alpha"
     },
 
     "require-dev": {
