@@ -1,6 +1,15 @@
-# module-project
-[![Build Status](https://travis-ci.org/lotgd/module-project.svg?branch=master)](https://travis-ci.org/lotgd/module-project)
+# Village module
+![Tests](https://github.com/lotgd/module-village/workflows/Tests/badge.svg)
 
-A template for a new LotGD module. Start with this code to make your own module.
+A simple module which adds a village square scene to the game upon installation.
+It uses the default-scene hook to relay new characters to the village square.
 
-For instructions, see the Modules section of the core's [README](https://github.com/lotgd/core/).
+## Scene templates
+
+`LotGD\Module\Village\SceneTemplates\VillageScene`
+- The module uses this scene template to forward the character to the default scene. 
+  If it does not exist, it will log an error and the character will be stuck.
+  If there are multiple village scenes available, it chooses the first it finds.
+
+## Event subscriptions
+- `#h/lotgd/core/default-scene#`
